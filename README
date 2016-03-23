@@ -47,10 +47,10 @@ is compressed as "mynew_matrix.tar.gz"
 riate values.
 
 2) In "dax-generator-kinc.py" file, rename the variable
-        (a) ematrix_input_targz_filename = "test.ematrix.tar.gz" --> "mynew_matr
+        (a) ematrix_input_targz_filename = "ematrix.tar.gz" --> "mynew_matr
 ix.tar.gz"
-        (b) ematrix_input_filename = "test.ematrix" --> "mynew_matrix.txt"
+        (b) ematrix_input_filename = "ematrix" --> "mynew_matrix.txt"
 
-3) If your "--num_jobs 100000" then, in "dax-generator-kinc.py" file change
+3) If your "--num_jobs 25000" then, in "dax-generator-kinc.py" file change
 the loop
-         (a) for i in range (1,100): --> for i in range (1,10001):
+         (a) for i in range (1,10001): --> for i in range (1,25001):
