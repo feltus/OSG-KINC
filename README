@@ -1,6 +1,17 @@
+OSG BACKGROUND INFORMATION:
+Utilize stash2 filesystem to set up and launch workflow.  /stash2/user/<username>
+login01 or login02 can be used to launch workflow.  
+login02 has more resources for submitting large workflows.  ssh login02.osgconnect.net
+Transfer input ematrix to the workflow directory
+
+-------------------------
+
+HOW TO SET UP WORKFLOW:
+
 Input file format:
 
 Tab delimited ematrix
+No 'GeneID' string in header.  First value of header is a dataset ID
 Number of columns = Number of datasets (can count number of columns in header to get this value)
 Number of Rows = Number of rows in file including the header
 
@@ -54,3 +65,11 @@ ix.tar.gz"
 3) If your "--num_jobs 25000" then, in "dax-generator-kinc.py" file change
 the loop
          (a) for i in range (1,10001): --> for i in range (1,25001):
+
+4) ./submit.bash
+        - Workflow can take several minutes to launch
+        - Warning messages about requesting memory will appear, these are normal:
+        [WARNING]  unknown profile condor.request_memory ,  using anyway
+        - Once workflow is submitted, a link to the workflow files and example pegasus 
+        commands to monitor the workflow will print to screen
+
