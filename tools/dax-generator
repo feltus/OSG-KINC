@@ -1,0 +1,109 @@
+#!/usr/bin/env python
+
+from __future__ import division
+
+from Pegasus.DAX3 import *
+import sys
+import math
+import os
+import re
+import subprocess
+import ConfigParser
+
+
+base_dir = os.getcwd()
+
+run_id = sys.argv[1]
+run_dir = sys.argv[2]    
+task_count = sys.argv[3]
+
+# globals
+task_files = {}
+
+
+def add_task_files(dax, job, task_name):
+    """
+    add a set of input files from the task-files dir to a task
+    """
+    global task_files
+    if task_name not in task_files:
+        task_files[task_name] = {}
+    # add to DAX-level replica catalog
+    for fname in os.listdir(base_dir + "/task-files/" + task_name):
+        if fname not in task_files[task_name]:
+            task_files[task_name][fname] = File(fname)
+            task_files[task_name][fname].addPFN( \
+                PFN("file://" + base_dir + "/task-files/" + task_name + "/" + fname, "local"))
+            dax.addFile(task_files[task_name][fname])
+    for f in task_files[task_name]:
+        job.uses(f, link=Link.INPUT)
+
+print("Adding .tar.gz and .txt from task-files/kinc-wrapper/")
+
+ematrix_input_filename = ""
+ematrix_input_targz_filename = ""
+
+count = 0
+for fname in os.listdir(base_dir + "/task-files/kinc-wrapper/"):
+    if re.search("\.txt$", fname):
+        print("    " + fname)
+        ematrix_input_filename = fname
+        count += 1
+if count != 1:
+    print("ERROR: Unable to find one, and only one, .txt file in the task-files/kinc-wrapper/ directory")
+    sys.exit(1)
+
+count = 0
+for fname in os.listdir(base_dir + "/task-files/kinc-wrapper/"):
+    if re.search("\.tar\.gz$", fname):
+        print("    " + fname)
+        ematrix_input_targz_filename = fname
+        count += 1
+if count != 1:
+    print("ERROR: Unable to find one, and only one, .tar.gz file in the task-files/kinc-wrapper/ directory")
+    sys.exit(1)
+
+# Create a abstract dag
+dax = ADAG("kinc")
+
+# email notificiations for when the state of the workflow changes
+dax.invoke('all',  base_dir + "/email-notify")
+
+# Add executables to the DAX-level replica catalog
+for exe_name in os.listdir("./tools/"):
+    exe = Executable(name=exe_name, arch="x86_64", installed=False)
+    exe.addPFN(PFN("file://" + base_dir + "/tools/" + exe_name, "local"))
+    if exe_name == "kinc-wrapper":
+        exe.addProfile(Profile(Namespace.PEGASUS, "clusters.size", 5))
+    dax.addExecutable(exe)
+
+# input file names
+ematrix_input_targz_filename = "test.tar.gz"
+ematrix_input_filename = "test.txt"
+
+# add jobs for job index
+for i in range (1, int(task_count) + 1):
+    job_id = "ID%07d" %(i)
+    kinc_job = Job(name="kinc-wrapper", id=job_id)
+    
+    add_task_files(dax, kinc_job, "kinc-wrapper") 
+    
+    kinc_job.addArguments(ematrix_input_targz_filename, ematrix_input_filename, str(i))
+    
+    sc_filename = "clusters-sc" + str(i) + ".tar.gz"
+    sc_file = File(sc_filename)
+    
+    kinc_out_filename = "kinc.out."+ str(i)
+    kinc_out_file = File(kinc_out_filename)
+    
+    kinc_job.uses(kinc_out_filename, link=Link.OUTPUT, transfer=True)
+    kinc_job.uses(sc_filename, link=Link.OUTPUT, transfer=True)
+    
+    dax.addJob(kinc_job)
+
+# Write the DAX to stdout
+f = open("dax.xml", "w")
+dax.writeXML(f)
+f.close()
+
+

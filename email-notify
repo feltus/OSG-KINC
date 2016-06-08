@@ -1,0 +1,25 @@
+#!/bin/bash
+
+export PATH=/usr/bin:/bin
+
+cd $PEGASUS_SUBMIT_DIR
+
+# use a temp file for the message body
+TMPFILE=`mktemp -t pegasus-notification.XXXXXXXXXX` || exit 1
+
+cat >>$TMPFILE <<EOF
+The following workflow issued an event: $PEGASUS_EVENT
+
+  $PEGASUS_SUBMIT_DIR
+
+Below is output from pegasus-status:
+
+EOF
+
+pegasus-status -v >>$TMPFILE 2>&1
+echo >>$TMPFILE
+
+cat $TMPFILE | mailx -s "Workflow event: $PEGASUS_EVENT  $PEGASUS_SUBMIT_DIR" $USER
+
+rm -f $TMPFILE
+

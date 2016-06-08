@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+export PATH=/home/rynge/software/pegasus-4.7.0dev/bin:$PATH
+
+TOPDIR=`pwd`
+
+JOB_COUNT=$1
+if [ "x$JOB_COUNT" = "x" ]; then
+    echo "Please specify the number of jobs. For example:"
+    echo "  ./kinc 100"
+    exit 1
+fi
+
+export RUN_ID=kinc-`date +'%s'`
+
+export RUN_DIR=/stash2/user/$USER/workflows/$RUN_ID
+mkdir -p $RUN_DIR
+chmod 700 $RUN_DIR
+
+# generate the dax
+export PYTHONPATH=`pegasus-config --python`
+./tools/dax-generator $RUN_ID $RUN_DIR $JOB_COUNT
+
+# plan and submit the  workflow
+pegasus-plan \
+    --conf pegasus.conf \
+    --cluster horizontal \
+    --relative-dir $RUN_ID \
+    --sites condorpool \
+    --staging-site stash \
+    --output-site local \
+    --dir $RUN_DIR/workflow \
+    --dax dax.xml \
+    --submit
+
+
