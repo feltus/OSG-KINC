@@ -1,8 +1,11 @@
 OSG BACKGROUND INFORMATION:
+
 Utilize stash2 filesystem to set up and launch workflow.  /stash2/user/<username>
-login01 or login02 can be used to launch workflow.  
-login02 has more resources for submitting large workflows.  ssh login02.osgconnect.net
-Transfer input ematrix to the workflow directory
+Please use login02 to launch workflow.  
+
+    ssh login02.osgconnect.net
+
+Transfer input ematrix to the task-files/kinc-wrapper/ directory
 
 -------------------------
 
@@ -35,15 +38,12 @@ Relevant Files and Directories:
 -----------------------
 
 kinc (software executable)
-kinc_job_with3args.bash (executable shell script)
-ematrix.tar.gz (input file)
+tools/kinc-wrapper (executable shell script)
 -----------------------
 
-submit.bash (Script that launches the workflow)
-dax-generator-kinc.py (generates dax.xml.)
-sites-generator.bash (generates sites.xml. The path of output and scratch direct
-ories are defined here)
-pegasusrc   (config file for pegasus.  Same file for every workflow)
+submit (Script that launches the workflow)
+tools/dax-generator (generates dax.xml.)
+pegasus.conf   (config file for pegasus.  Same file for every workflow)
 ------------------------
 
 scratch/    (input and output files are temporarily stored here)
@@ -54,19 +54,9 @@ outputs/    (Output is transferred here once workflow completes)
 How to submit the workflow for a new input file called "mynew_matrix.txt" which
 is compressed as "mynew_matrix.tar.gz"
 
-1) In "kinc_job_with3args.bash" file, change "--rows 10000 --cols 200 " to approp
-riate values.
+1) Copy the *.gz and *.txt files to task-files/kinc-wrapper/
 
-2) In "dax-generator-kinc.py" file, rename the variable
-        (a) ematrix_input_targz_filename = "ematrix.tar.gz" --> "mynew_matr
-ix.tar.gz"
-        (b) ematrix_input_filename = "ematrix" --> "mynew_matrix.txt"
-
-3) If your "--num_jobs 25000" then, in "dax-generator-kinc.py" file change
-the loop
-         (a) for i in range (1,10001): --> for i in range (1,25001):
-
-4) ./submit.bash
+2) ./submit [number of lines]
         - Workflow can take several minutes to launch
         - Warning messages about requesting memory will appear, these are normal:
         [WARNING]  unknown profile condor.request_memory ,  using anyway

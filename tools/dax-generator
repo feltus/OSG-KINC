@@ -73,8 +73,8 @@ dax.invoke('all',  base_dir + "/email-notify")
 for exe_name in os.listdir("./tools/"):
     exe = Executable(name=exe_name, arch="x86_64", installed=False)
     exe.addPFN(PFN("file://" + base_dir + "/tools/" + exe_name, "local"))
-    if exe_name == "kinc-wrapper":
-        exe.addProfile(Profile(Namespace.PEGASUS, "clusters.size", 5))
+    #if exe_name == "kinc-wrapper":
+    #    exe.addProfile(Profile(Namespace.PEGASUS, "clusters.size", 5))
     dax.addExecutable(exe)
 
 # input file names
