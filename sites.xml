@@ -9,8 +9,7 @@
             <file-server operation="all" url="file://${RUN_DIR}/outputs"/>
         </directory>
         <profile namespace="pegasus" key="SSH_PRIVATE_KEY" >/home/${USER}/.ssh/workflow</profile>
-        <profile namespace="env" key="PATH" >/cvmfs/oasis.opensciencegrid.org/osg/modules/stashcp/3.1/bin:${PATH}</profile>
-        <profile namespace="env" key="LD_LIBRARY_PATH" >/cvmfs/oasis.opensciencegrid.org/osg/modules/xrootd/4.2.1/lib64</profile>
+        <profile namespace="env" key="PATH" >${PATH}</profile>
         <profile namespace="condor" key="+WantsStashCache" >True</profile>
     </site>
 
@@ -29,6 +28,10 @@
         <profile namespace="condor" key="request_memory" >1 GB</profile>
         <profile namespace="condor" key="request_disk" >5 GB</profile>
         <profile namespace="condor" key="+WantsStashCache" >True</profile>
+        
+        <!-- disable OSG squid caching for now -->
+        <profile namespace="env" key="http_proxy" ></profile>
+        <profile namespace="env" key="OSG_SQUID_LOCATION" ></profile>
     </site>
 
 </sitecatalog>
