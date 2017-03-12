@@ -74,10 +74,6 @@ for exe_name in os.listdir("./tools/"):
     #    exe.addProfile(Profile(Namespace.PEGASUS, "clusters.size", 5))
     dax.addExecutable(exe)
 
-# input file names
-ematrix_input_targz_filename = "test.tar.gz"
-ematrix_input_filename = "test.txt"
-
 # add jobs for job index
 for i in range (1, int(task_count) + 1):
     job_id = "ID%07d" %(i)
