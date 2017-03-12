@@ -40,9 +40,6 @@ def add_task_files(dax, job, task_name):
 
 print("Adding .tar.gz and .txt from task-files/kinc-wrapper/")
 
-ematrix_input_filename = ""
-ematrix_input_targz_filename = ""
-
 count = 0
 for fname in os.listdir(base_dir + "/task-files/kinc-wrapper/"):
     if re.search("\.txt$", fname):
