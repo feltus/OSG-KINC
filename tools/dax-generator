@@ -81,7 +81,7 @@ for i in range (1, int(task_count) + 1):
     
     add_task_files(dax, kinc_job, "kinc-wrapper") 
     
-    kinc_job.addArguments(ematrix_input_targz_filename, ematrix_input_filename, str(i))
+    kinc_job.addArguments(ematrix_input_targz_filename, ematrix_input_filename, str(i), task_count)
     
     sc_filename = "clusters-sc" + str(i) + ".tar.gz"
     sc_file = File(sc_filename)

@@ -3,6 +3,7 @@
 input_matrix_targz=$1
 input_matrix=$2
 job_index_input=$3
+num_jobs=$4
 
 echo "Loading modules ..."
 source /cvmfs/oasis.opensciencegrid.org/osg/modules/lmod/current/init/bash
@@ -19,7 +20,7 @@ chmod +x kinc
 
 START_TS=`date +'%s'`
 
-./kinc similarity --ematrix $input_matrix --rows 201 --cols 2016 --headers --method sc --omit_na --na_val NA --clustering mixmod --criterion ICL --min_obs 30 --num_jobs 500 --job_index $job_index_input > kinc.out.$job_index_input
+./kinc similarity --ematrix $input_matrix --rows 201 --cols 2016 --headers --method sc --omit_na --na_val NA --clustering mixmod --criterion ICL --min_obs 30 --num_jobs $num_jobs --job_index $job_index_input > kinc.out.$job_index_input
 tar czf clusters-sc$job_index_input.tar.gz clusters-sc
 RC=$?
 
