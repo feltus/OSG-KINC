@@ -29,35 +29,35 @@ def add_task_files(dax, job, task_name):
     if task_name not in task_files:
         task_files[task_name] = {}
     # add to DAX-level replica catalog
-    for fname in os.listdir(base_dir + "/task-files/" + task_name):
+    for fname in os.listdir(base_dir + "/task-files/"):
         if fname not in task_files[task_name]:
             task_files[task_name][fname] = File(fname)
             task_files[task_name][fname].addPFN( \
-                PFN("file://" + base_dir + "/task-files/" + task_name + "/" + fname, "local"))
+                PFN("file://" + base_dir + "/task-files/" + fname, "local"))
             dax.addFile(task_files[task_name][fname])
     for f in task_files[task_name]:
         job.uses(f, link=Link.INPUT)
 
-print("Adding .tar.gz and .txt from task-files/kinc-wrapper/")
+print("Adding .tar.gz and .txt from task-files/")
 
 count = 0
-for fname in os.listdir(base_dir + "/task-files/kinc-wrapper/"):
+for fname in os.listdir(base_dir + "/task-files/"):
     if re.search("\.txt$", fname):
         print("    " + fname)
         ematrix_input_filename = fname
         count += 1
 if count != 1:
-    print("ERROR: Unable to find one, and only one, .txt file in the task-files/kinc-wrapper/ directory")
+    print("ERROR: Unable to find one, and only one, .txt file in the task-files/ directory")
     sys.exit(1)
 
 count = 0
-for fname in os.listdir(base_dir + "/task-files/kinc-wrapper/"):
+for fname in os.listdir(base_dir + "/task-files/"):
     if re.search("\.tar\.gz$", fname):
         print("    " + fname)
         ematrix_input_targz_filename = fname
         count += 1
 if count != 1:
-    print("ERROR: Unable to find one, and only one, .tar.gz file in the task-files/kinc-wrapper/ directory")
+    print("ERROR: Unable to find one, and only one, .tar.gz file in the task-files/ directory")
     sys.exit(1)
 
 # Create a abstract dag
