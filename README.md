@@ -74,7 +74,9 @@ This will submit the workflow, and split the computation into 1000 jobs.  This i
 
 In addition to properly formatting the input GEM, the user must specify an appropriate number of jobs.  The number of pairwise comparisons performed scales quickly with the number of rows in the matrix:
 
-(n x (n - 1)) / 2, where n = the number of rows in the matrix.  For example, a GEM containing 88,520 rows will result in over 3.9 billion comparisons being performed.  For a matrix of this size, with less than 500 samples,  we recommend submitting the workflow with 80,000 jobs.  
+(n x (n - 1)) / 2, where n = the number of rows in the matrix.  
+
+For example, a GEM containing 88,520 rows will result in over 3.9 billion comparisons being performed.  For a matrix of this size, with less than 500 samples,  we recommend submitting the workflow with 80,000 jobs.  
 
 The number of columns (samples) also has a large affect on the computational time needed to run this workflow.  As a result, we have not yet determined a formula or algorithm that decides the optimum number of jobs for a given matrix.  However, please aim for less than 1 GB of output per job, and an average job runtime of less than 4 hours.  If you submit a workflow and none of the jobs are finishing within several hours, please resubmit with a larger number of jobs.    
 
@@ -86,15 +88,15 @@ Once the input GEM.txt, and corresponding GEM.tar.gz file have been placed in th
 
 Pegasus provides a set of commands to monitor the progress of the workflow.  
 
-$pegasus-analyzer
-$pegasus-status
-$pegasus-statistics 
+        $pegasus-analyzer
+        $pegasus-status
+        $pegasus-statistics 
 
 - *pegasus-analyzer* will identify failed jobs for troubleshooting.  
 - *pegasus-statistics* will report workflow progress, presented as number of succesful, queued, and failed jobs
 - *pegasus-statistics* will produce basic workflow statistics once it has completed.  Use the following command to generate a detailed breakdown of job statistics:
 
-$ pegasus-statistics -s all
+        $pegasus-statistics -s all
 
 To run these commands, the user must provide the full path to the workflow directory, or cd into this directory.  This directory is separate from where the workflow is submitted, and will be located on the /local-scratch filesystem:
 
@@ -106,7 +108,21 @@ Here is an example of a full path to the workflow directory:
 
 In the event that the workflow finishes with failed jobs, the failed jobs can be resubmitted with the following command:
 
-$ pegasus-run
+        $pegasus-run
+        
+## workflow output
+
+Output will be temporarily stored on a scratch filesystem, and then copied onto the /local-scratch filesystem.  This output directory is present at the base of the workflow directory:
+
+/local-scratch/<user_id>/workflows/kinc-<workflow_id>/outputs
+
+for example:
+
+/local-scratch/wpoehlm/workflows/kinc-1489505008/outputs
+
+
+
+
 
 
 
