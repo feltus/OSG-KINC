@@ -27,7 +27,7 @@ Test that the key is set up correctly by sshing from login02 to login02, using t
 
         $ ssh -i ~/.ssh/workflow login02.osgconnect.net
 
-If that works, log out from the new session. You are now ready to submit workflows.
+If that works, log out from the new session. You are now ready to submit workflows.  Note that this key only needs to be generated once for each user, not everytime that a workflow is submitted
 
 ## Input GEM Format
 
@@ -63,12 +63,16 @@ In addition, a compressed tar archive with the extension 'tar.gz' of this text f
 
 An example GEM, 'test.txt', is cloned in the task-files directory in this repository.  Please inspect this file to see an example of a properly formatted input file. The task-files directory also has the corresponding 'test.tar.gz' file.  
 
-Once the input files are placed in the task-files directory, the workflow can be submitted by executing the 'submit' script, with one additional argument representing the number of jobs that you want to submit.  For example:
+Once the input files are placed in the task-files directory, the workflow can be submitted by executing the *submit* script, with one additional argument representing the number of jobs that you want to submit.  For example:
 
     $ ./submit 1000
     
 This will submit the workflow, and split the computation into 1000 jobs.  This is the suggested number of jobs for submitting this test workflow.  
     
+    
+## Customizing the workflow
+
+
 
 
         
