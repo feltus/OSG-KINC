@@ -86,15 +86,15 @@ Once the input GEM.txt, and corresponding GEM.tar.gz file have been placed in th
 
 Pegasus provides a set of commands to monitor the progress of the workflow.  
 
-        $pegasus-analyzer
-        $pegasus-status
-        $pegasus-statistics 
+        $ pegasus-analyzer
+        $ pegasus-status
+        $ pegasus-statistics 
 
 - *pegasus-analyzer* will identify failed jobs for troubleshooting.  
 - *pegasus-statistics* will report workflow progress, presented as number of succesful, queued, and failed jobs
 - *pegasus-statistics* will produce basic workflow statistics once it has completed.  Use the following command to generate a detailed breakdown of job statistics:
 
-        $pegasus-statistics -s all
+        $ pegasus-statistics -s all
 
 To run these commands, the user must provide the full path to the workflow directory, or cd into this directory.  This directory is separate from where the workflow is submitted, and will be located on the /local-scratch filesystem:
 
@@ -106,7 +106,7 @@ Here is an example of a full path to the workflow directory:
 
 In the event that the workflow finishes with failed jobs, the failed jobs can be resubmitted with the following command:
 
-        $pegasus-run
+        $ pegasus-run
         
 ## Workflow Output
 
