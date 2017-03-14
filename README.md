@@ -70,7 +70,7 @@ Once the input files are placed in the task-files directory, the workflow can be
 This will submit the workflow, and split the computation into 1000 jobs.  This is the suggested number of jobs for submitting this test workflow.  
     
     
-## Customizing the workflow
+## Customizing the Workflow
 
 In addition to properly formatting the input GEM, the user must specify an appropriate number of jobs.  The number of pairwise comparisons performed scales quickly with the number of rows in the matrix:
 
@@ -84,7 +84,7 @@ The *kinc-wrapper* in the *tools* directory contains the parameters that are pas
 
 Once the input GEM.txt, and corresponding GEM.tar.gz file have been placed in the task-files directory, the user must delete the 'test.txt' and 'test.tar.gz' files before submitting the workflow.  To avoid confusion, the workflow will fail to submit if multiple input datasets are present in the task-files directory.  
 
-## Monitoring the workflow
+## Monitoring the Workflow
 
 Pegasus provides a set of commands to monitor the progress of the workflow.  
 
@@ -110,7 +110,7 @@ In the event that the workflow finishes with failed jobs, the failed jobs can be
 
         $pegasus-run
         
-## workflow output
+## Workflow Output
 
 Output will be temporarily stored on a scratch filesystem, and then copied onto the /local-scratch filesystem.  This output directory is present at the base of the workflow directory:
 
