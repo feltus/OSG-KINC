@@ -80,6 +80,40 @@ The number of columns (samples) also has a large affect on the computational tim
 
 The *kinc-wrapper* in the *tools* directory contains the parameters that are passed to the KINC software.  The user may modify this file to change clustering or correlation parameters.  In addition, the user may specify missing value fields (Default is NA).  Do not remove the --header paramter, as this will result in an incorrect identification of matrix dimensions.  
 
+Once the input GEM.txt, and corresponding GEM.tar.gz file have been placed in the task-files directory, the user must delete the 'test.txt' and 'test.tar.gz' files before submitting the workflow.  To avoid confusion, the workflow will fail to submit if multiple input datasets are present in the task-files directory.  
+
+## Monitoring the workflow
+
+Pegasus provides a set of commands to monitor the progress of the workflow.  
+
+$pegasus-analyzer
+$pegasus-status
+$pegasus-statistics 
+
+- *pegasus-analyzer* will identify failed jobs for troubleshooting.  
+- *pegasus-statistics* will report workflow progress, presented as number of succesful, queued, and failed jobs
+- *pegasus-statistics* will produce basic workflow statistics once it has completed.  Use the following command to generate a detailed breakdown of job statistics:
+
+$ pegasus-statistics -s all
+
+To run these commands, the user must provide the full path to the workflow directory, or cd into this directory.  This directory is separate from where the workflow is submitted, and will be located on the /local-scratch filesystem:
+
+/local-scratch/<user_id>/workflows/kinc-<workflow_id>/workflow/kinc-<workflow_id>
+
+Here is an example of a full path to the workflow directory:
+
+/local-scratch/wpoehlm/workflows/kinc-1489505008/workflow/kinc-1489505008
+
+In the event that the workflow finishes with failed jobs, the failed jobs can be resubmitted with the following command:
+
+$ pegasus-run
+
+
+
+
+
+
+
 
 
 
