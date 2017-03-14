@@ -60,6 +60,20 @@ if count != 1:
     print("ERROR: Unable to find one, and only one, .tar.gz file in the task-files/ directory")
     sys.exit(1)
 
+#Calculate input matrix dimensions to provide arguments for kinc wrapper
+count = 0
+for line in open(os.path.join(base_dir, "task-files", ematrix_input_filename)):
+    count +=1
+    if count == 1:
+        header = line.strip().split("\t")
+        cols = len(header) 
+        if cols == 0:
+            print("Warning: header does not appear to be tab-delimited, using single-space delimiter instead")
+            header = line.strip().split(" ")
+            cols = len(header)
+    rows = count
+print("The number of columns identified:" + " " + str(cols) + "." + "\n" + "The number of rows identified:" + " " + str(rows) + ".")
+
 # Create a abstract dag
 dax = ADAG("kinc")
 
@@ -81,7 +95,7 @@ for i in range (1, int(task_count) + 1):
     
     add_task_files(dax, kinc_job, "kinc-wrapper") 
     
-    kinc_job.addArguments(ematrix_input_targz_filename, ematrix_input_filename, str(i), task_count)
+    kinc_job.addArguments(ematrix_input_targz_filename, ematrix_input_filename, str(i), task_count, str(cols), str(rows))
     
     sc_filename = "clusters-sc" + str(i) + ".tar.gz"
     sc_file = File(sc_filename)
