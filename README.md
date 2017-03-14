@@ -34,22 +34,23 @@ If that works, log out from the new session. You are now ready to submit workflo
 The workflow will automatically identify the dimensions of the input Gene Expression Matrix.  However, this matrix must be formatted as follows:
 
 - Tab delimited text file
-- No 'GeneID' string in header.  First value of header is a sample ID
+- No 'GeneID' string in header.  First value of header is a sample ID (it looks frameshifted, don't worry)
 - Number of columns = Number of datasets (can count number of columns in header to get this value)
 - Number of Rows = Number of rows in file including the header
 
-Dataset1	Dataset2	Dataset3
-Gene1	1	0	2
-Gene2	0	3	5
-Gene3	2	2	4
-Gene4	11	12	0
-Gene5	15	0	3
+| Sample1 | Sample2 | Sample3 | Sample4 | Sample5 |         |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+| Gene1 | 0.215 | 12.770 | 15.112 | 12.111 | 501.211 |    
+| Gene2 | 0.111 | 10.265 | 50.555 | 200.331 | 423.221 |
+| Gene3 | 0.212 | 0.472 | 12.223 | 111.121 | 456.778 |
+| Gene4 | 0.543 | 0.778 | 23.421 | 224.431 | 333.421 |
+| Gene5 | 0.321 | 0.783 | 44.431 | 353.765 | 334.431 | 
 
 For this dataset, the kinc parameters would be identified as follows:
 
 rows: 6
 
-columns: 3 
+columns: 5 
 
 Once the input GEM is formatted properly, it must be named with the '.txt' file extension and placed in the 'task-files' directory of the workflow.  
 
