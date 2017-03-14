@@ -35,8 +35,6 @@ The workflow will automatically identify the dimensions of the input Gene Expres
 
 - Tab delimited text file
 - No 'GeneID' string in header.  First value of header is a sample ID (it looks frameshifted, don't worry)
-- Number of columns = Number of datasets (can count number of columns in header to get this value)
-- Number of Rows = Number of rows in file including the header
 
 | Sample1 | Sample2 | Sample3 | Sample4 | Sample5 |         |
 | ------- | ------- | ------- | ------- | ------- | ------- |
