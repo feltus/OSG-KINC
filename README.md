@@ -72,6 +72,15 @@ This will submit the workflow, and split the computation into 1000 jobs.  This i
     
 ## Customizing the workflow
 
+In addition to properly formatting the input GEM, the user must specify an appropriate number of jobs.  The number of pairwise comparisons performed scales quickly with the number of rows in the matrix:
+
+(n x (n - 1)) / 2, where n = the number of rows in the matrix.  For example, a GEM containing 88,520 rows will result in over 3.9 billion comparisons being performed.  For a matrix of this size, with less than 500 samples,  we recommend submitting the workflow with 80,000 jobs.  
+
+The number of columns (samples) also has a large affect on the computational time needed to run this workflow.  As a result, we have not yet determined a formula or algorithm that decides the optimum number of jobs for a given matrix.  However, please aim for less than 1 GB of output per job, and an average job runtime of less than 4 hours.  If you submit a workflow and none of the jobs are finishing within several hours, please resubmit with a larger number of jobs.    
+
+The *kinc-wrapper* in the *tools* directory contains the parameters that are passed to the KINC software.  The user may modify this file to change clustering or correlation parameters.  In addition, the user may specify missing value fields (Default is NA).  Do not remove the --header paramter, as this will result in an incorrect identification of matrix dimensions.  
+
+
 
 
 
