@@ -2,10 +2,21 @@
 
 set -e
 
-# needed for stashcp to be picked up the site catalog for the local site
-module load stashcp
+# are we on OSG Connect?
+if [ -e /stash2 ]; then
 
-module load pegasus
+    # needed for stashcp to be picked up the site catalog for the local site
+    module load stashcp
+    module load pegasus
+
+    export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
+    COMPUTE_SITE="osg-condorpool"
+    STAGING_SITE="osg-stash"
+else
+    export RUN_DIR=$PWD/workflows/$RUN_ID
+    COMPUTE_SITE="generic-condorpool"
+    STAGING_SITE="generic-staging"
+fi
 
 TOPDIR=`pwd`
 
@@ -18,7 +29,6 @@ fi
 
 export RUN_ID=kinc-`date +'%s'`
 
-export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
 mkdir -p $RUN_DIR
 chmod 700 $RUN_DIR
 
@@ -31,8 +41,8 @@ pegasus-plan \
     --conf pegasus.conf \
     --cluster horizontal \
     --relative-dir $RUN_ID \
-    --sites condorpool \
-    --staging-site stash \
+    --sites $COMPUTE_SITE \
+    --staging-site $STAGING_SITE \
     --output-site local \
     --dir $RUN_DIR/workflow \
     --dax dax.xml \

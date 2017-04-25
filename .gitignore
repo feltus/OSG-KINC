@@ -2,4 +2,7 @@ dax.xml
 task-files/*.gz
 task-files/*.txt
 task-files/kinc
+staging
+workflows
+
 

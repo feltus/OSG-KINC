@@ -8,13 +8,13 @@ colnum=$5
 rownum=$6
 
 echo "Loading modules ..."
-source /cvmfs/oasis.opensciencegrid.org/osg/modules/lmod/current/init/bash
+source /cvmfs/oasis.opensciencegrid.org/osg/sw/module-init.sh
 module load sqlite/3.8.11.1
 module load libgfortran
 module load lapack
 module load gcc/4.9.2
 module load mixmodlib
-module load gsl
+module load gsl/1.16
 echo "Module loading done."
 
 tar -xzf $input_matrix_targz
