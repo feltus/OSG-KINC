@@ -29,8 +29,8 @@ fi
 
 export RUN_ID=kinc-`date +'%s'`
 
-mkdir -p $RUN_DIR
-chmod 700 $RUN_DIR
+export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
+
 
 # generate the dax
 export PYTHONPATH=`pegasus-config --python`

@@ -112,12 +112,11 @@ In the event that the workflow finishes with failed jobs, the failed jobs can be
 
 Output will be temporarily stored on a scratch filesystem, and then copied onto the /local-scratch filesystem.  This output directory is present at the base of the workflow directory:
 
-/local-scratch/<user_id>/workflows/outptus
+/local-scratch/<user_id>/workflows/kinc-<workflow_id>/outputs
 
 for example:
 
-/local-scratch/wpoehlm/workflows/outputs
-
+/local-scratch/wpoehlm/workflows/kinc-1489505008/outputs
 
 
 
