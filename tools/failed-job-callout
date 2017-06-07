@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export PATH=/usr/bin:/bin
+
+cd $PEGASUS_SUBMIT_DIR
+
+# we want to increase the request_memory for failed jobs, but first we need
+# the submit file name
+SUBMIT_FILE=`echo $PEGASUS_STDOUT | sed 's;\.out\..*;.sub;'`
+
+perl -p -i -e 's/^request_memory.*/request_memory = 5 GB/i' $SUBMIT_FILE
+
+

@@ -78,7 +78,7 @@ print("The number of columns identified:" + " " + str(cols) + "." + "\n" + "The 
 dax = ADAG("kinc")
 
 # email notificiations for when the state of the workflow changes
-dax.invoke('all',  base_dir + "/email-notify")
+dax.invoke('all',  base_dir + "/tools/email-notify")
 
 # Add executables to the DAX-level replica catalog
 for exe_name in os.listdir("./tools/"):
@@ -105,6 +105,9 @@ for i in range (1, int(task_count) + 1):
     
     kinc_job.uses(kinc_out_filename, link=Link.OUTPUT, transfer=True)
     kinc_job.uses(sc_filename, link=Link.OUTPUT, transfer=True)
+
+    # use notifications callout to update requested memory for subsequent job tries
+    kinc_job.invoke('on_error',  base_dir + "/tools/failed-job-callout")
     
     dax.addJob(kinc_job)
 
