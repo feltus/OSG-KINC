@@ -44,7 +44,7 @@ if [ -n "$gem_path" ]; then
     rm -f task-files/Yeast-GEM.txt
     rm -f task-files/Yeast-GEM.tar.gz
     # try to fetch the GEM file
-    irods_get "$gem_path" task_files/
+    irods_get "$gem_path" task-files/
     if [ $? -ne 0 ]; then
         echo "Error: iRODS get of $gem_path failed."
         exit 1
