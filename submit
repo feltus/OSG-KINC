@@ -2,6 +2,14 @@
 
 set -e
 
+irods_get() {
+    local srcDataObj="$1"
+    local destLocalDir="$2"
+
+    # get a file from iRODS (overwrite existing and display progress)
+    iget -f -P "$srcDataObj" "$destLocalDir"
+}
+
 # are we on OSG Connect?
 if [ -e /stash2 ]; then
 
@@ -25,6 +33,23 @@ if [ "x$JOB_COUNT" = "x" ]; then
     echo "Please specify the number of jobs. For example:"
     echo "  ./kinc 100"
     exit 1
+fi
+
+###
+### copy the GEM from iRODS if a second script argument exists
+###
+gem_path="$2"
+if [ -n "$gem_path" ]; then
+    # remove the yeast test data
+    rm -f task-files/Yeast-GEM.txt
+    rm -f task-files/Yeast-GEM.tar.gz
+    # try to fetch the GEM file
+    irods_get "$gem_path" task_files/
+    if [ $? -ne 0 ]; then
+        echo "Error: iRODS get of $gem_path failed."
+        exit 1
+    fi
+    tar zxf task-files/Yeast-GEM.tar.gz -C task-files/
 fi
 
 export RUN_ID=kinc-`date +'%s'`
