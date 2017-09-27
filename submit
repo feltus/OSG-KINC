@@ -39,6 +39,7 @@ fi
 ### copy the GEM from iRODS if a second script argument exists
 ###
 gem_path="$2"
+gem=$(basename $gem_path)
 if [ -n "$gem_path" ]; then
     # remove the yeast test data
     rm -f task-files/Yeast-GEM.txt
@@ -49,12 +50,12 @@ if [ -n "$gem_path" ]; then
         echo "Error: iRODS get of $gem_path failed."
         exit 1
     fi
-    tar zxf task-files/Yeast-GEM.tar.gz -C task-files/
+    tar zxf task-files/$gem -C task-files/
 fi
 
 export RUN_ID=kinc-`date +'%s'`
 
-export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
+#export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
 
 
 # generate the dax
