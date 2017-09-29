@@ -39,8 +39,8 @@ fi
 ### copy the GEM from iRODS if a second script argument exists
 ###
 gem_path="$2"
-gem=$(basename $gem_path)
 if [ -n "$gem_path" ]; then
+    gem=$(basename $gem_path)
     # remove the yeast test data
     rm -f task-files/Yeast-GEM.txt
     rm -f task-files/Yeast-GEM.tar.gz
@@ -70,7 +70,7 @@ pegasus-plan \
     --sites $COMPUTE_SITE \
     --staging-site $STAGING_SITE \
     --output-site local \
-    --dir $RUN_DIR/workflow \
+    --dir $RUN_DIR \
     --dax dax.xml \
     --submit
 
