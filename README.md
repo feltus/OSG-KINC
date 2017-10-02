@@ -114,6 +114,27 @@ for example:
 /local-scratch/wpoehlm/workflows/kinc-1489505008/outputs
 
 
+## Using iRODS as Workflow Staging Site
+
+OSG-KINC may pull in an input dataset from a remote iRODS server, use iRODS as the workflow staging site, and transfer output files to the iRODS server.  To do so, the user must take the following steps:
+
+* install the iRODS icommands on the submit host and any worker nodes
+* create irods environment file: ~/.irods/irods_environment.json 
+
+This file must have the following content:
+
+    {
+    "irods_host": "some.host.edu",
+    "irods_port": 1247,
+    "irods_user_name": "someuser",
+    "irods_zone_name": "somezone",
+    "irodsPassword" : "somesecretpassword"
+    }
+
+* provide an iRODS path to a compressed input file as a second argument for the sumit script.  For example:
+
+      ./submit 1000 /myirodszone/home/user/test.tar.gz 
+
 
 
 
