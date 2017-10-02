@@ -2,11 +2,11 @@
 <sitecatalog xmlns="http://pegasus.isi.edu/schema/sitecatalog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pegasus.isi.edu/schema/sitecatalog http://pegasus.isi.edu/schema/sc-4.0.xsd" version="4.0">
 
     <site  handle="local" arch="x86_64">
-        <directory type="shared-scratch" path="${RUN_DIR}/scratch">
-            <file-server operation="all" url="file://${RUN_DIR}/scratch"/>
+        <directory type="shared-scratch" path="$RUN_DIR/$RUN_ID/scratch">
+            <file-server operation="all" url="file://$RUN_DIR/$RUN_ID/scratch"/>
         </directory>
-        <directory type="local-storage" path="${RUN_DIR}/outputs">
-            <file-server operation="all" url="file://${RUN_DIR}/outputs"/>
+        <directory type="local-storage" path="$RUN_DIR/$RUN_ID/outputs">
+            <file-server operation="all" url="file://$RUN_DIR/$RUN_ID/outputs"/>
         </directory>
         <profile namespace="pegasus" key="SSH_PRIVATE_KEY" >/home/${USER}/.ssh/workflow</profile>
         <profile namespace="env" key="PATH" >${PATH}</profile>
@@ -19,6 +19,17 @@
             <!-- file-server operation="get" url="http://stash.osgconnect.net/~${USER}"/ -->
             <file-server operation="put" url="scp://${USER}@login02.osgconnect.net/stash2/user/${USER}/public"/>
         </directory>
+    </site>
+
+
+    <site  handle="irods" arch="x86_64" os="LINUX">
+        <directory type="shared-scratch" path="$irods_path/kinc-workflows/$RUN_ID">
+            <file-server operation="all" url="irods://$irods_path/kinc-workflows/$RUN_ID"/>
+        </directory>
+        <directory type="local-storage" path="$irods_path/kinc-workflows/$RUN_ID/outputs">
+            <file-server operation="all" url="irods://$irods_path/kinc-workflows/$RUN_ID/outputs"/>
+        </directory>
+    <profile namespace="pegasus" key="irodsEnvFile" >/home/$USER/.irods/irods_environment.json</profile>
     </site>
 
     <site  handle="osg-condorpool" arch="x86_64" os="LINUX">
@@ -45,3 +56,4 @@
 
 
 </sitecatalog>
+
