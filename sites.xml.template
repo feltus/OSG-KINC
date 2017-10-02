@@ -21,6 +21,17 @@
         </directory>
     </site>
 
+
+    <site  handle="irods" arch="x86_64" os="LINUX">
+        <directory type="shared-scratch" path="$irods_path/kinc-workflows/$RUN_ID">
+            <file-server operation="all" url="irods://$irods_path/kinc-workflows/$RUN_ID"/>
+        </directory>
+        <directory type="local-storage" path="$irods_path/kinc-workflows/$RUN_ID/outputs">
+            <file-server operation="all" url="irods://$irods_path/kinc-workflows/$RUN_ID/outputs"/>
+        </directory>
+    <profile namespace="pegasus" key="irodsEnvFile" >/home/$USER/.irods/irods_environment.json</profile>
+    </site>
+
     <site  handle="osg-condorpool" arch="x86_64" os="LINUX">
         <profile namespace="pegasus" key="style" >condor</profile>
         <profile namespace="condor" key="universe" >vanilla</profile>
@@ -45,3 +56,4 @@
 
 
 </sitecatalog>
+

@@ -23,7 +23,7 @@ if [ -e /stash2 ]; then
 else
     export RUN_DIR=$PWD/workflows/$RUN_ID
     COMPUTE_SITE="generic-condorpool"
-    STAGING_SITE="generic-staging"
+    STAGING_SITE="irods"
 fi
 
 TOPDIR=`pwd`
@@ -57,22 +57,43 @@ export RUN_ID=kinc-`date +'%s'`
 
 #export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
 
+#generate sites.xml using the variables in this submit script
+
+export irods_path=$(dirname $2)
+envsubst < "sites.xml.template" > "sites.xml"
 
 # generate the dax
 export PYTHONPATH=`pegasus-config --python`
 ./tools/dax-generator $RUN_ID $RUN_DIR $JOB_COUNT
 
-# plan and submit the  workflow
-pegasus-plan \
-    --conf pegasus.conf \
-    --cluster horizontal \
-    --relative-dir $RUN_ID \
-    --sites $COMPUTE_SITE \
-    --staging-site $STAGING_SITE \
-    --output-site local \
-    --dir $RUN_DIR \
-    --dax dax.xml \
-    --submit
+# plan and submit the  workflow.  Use irods as staging and output site if path is provided
+
+if [ -n "$gem_path" ]; then
+
+    pegasus-plan \
+        --conf pegasus.conf \
+        --cluster horizontal \
+        --relative-dir $RUN_ID \
+        --sites $COMPUTE_SITE \
+        --staging-site $STAGING_SITE \
+        --output-site irods \
+        --dir $RUN_DIR \
+        --dax dax.xml \
+        --submit
+
+else 
+    
+    pegasus-plan \
+        --conf pegasus.conf \
+        --cluster horizontal \
+        --relative-dir $RUN_ID \
+        --sites $COMPUTE_SITE \
+        --staging-site $STAGING_SITE \
+        --output-site local \
+        --dir $RUN_DIR \
+        --dax dax.xml \
+        --submit
+fi
 
 
 
