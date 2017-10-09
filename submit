@@ -20,10 +20,14 @@ if [ -e /stash2 ]; then
     export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
     COMPUTE_SITE="osg-condorpool"
     STAGING_SITE="osg-stash"
-else
+elif [ -n "$2" ]; then
     export RUN_DIR=$PWD/workflows/$RUN_ID
     COMPUTE_SITE="generic-condorpool"
     STAGING_SITE="irods"
+else
+    export RUN_DIR=$PWD/workflows/$RUN_ID
+    COMPUTE_SITE="generic-condorpool"
+    STAGING_SITE="local"
 fi
 
 TOPDIR=`pwd`
