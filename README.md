@@ -54,11 +54,11 @@ In addition, a compressed tar archive with the extension 'tar.gz' of this text f
     
 ## Submitting the Test Workflow
 
-An example GEM, 'test.txt', is cloned in the task-files directory in this repository.  Please inspect this file to see an example of a properly formatted input file. The task-files directory also has the corresponding 'test.tar.gz' file.  
+An example GEM, 'Yeast-GEM.txt', is cloned in the task-files directory in this repository.  Please inspect this file to see an example of a properly formatted input file. The task-files directory also has the corresponding 'Yeast-GEM.tar.gz' file.  
 
 Once the input files are placed in the task-files directory, the workflow can be submitted by executing the *submit* script, with one additional argument representing the number of jobs that you want to submit.  For example:
 
-    $ ./submit 1000
+    $ ./submit 8000
     
 This will submit the workflow, and split the computation into 1000 jobs.  This is the suggested number of jobs for submitting this test workflow.  
     
