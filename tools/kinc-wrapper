@@ -18,6 +18,7 @@ module load gsl/1.16
 echo "Module loading done."
 
 tar -xzf $input_matrix_targz
+rm $input_matrix_targz
 chmod +x kinc
 
 START_TS=`date +'%s'`

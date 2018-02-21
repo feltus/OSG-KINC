@@ -30,7 +30,7 @@ def add_task_files(dax, job, task_name):
         task_files[task_name] = {}
     # add to DAX-level replica catalog
     for fname in os.listdir(base_dir + "/task-files/"):
-        if fname not in task_files[task_name]:
+        if fname not in task_files[task_name] and ".txt" not in fname:
             task_files[task_name][fname] = File(fname)
             task_files[task_name][fname].addPFN( \
                 PFN("file://" + base_dir + "/task-files/" + fname, "local"))
