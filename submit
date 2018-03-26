@@ -15,7 +15,10 @@ if [ -e /stash2 ]; then
 
     # needed for stashcp to be picked up the site catalog for the local site
     module load stashcp
-    module load pegasus
+    
+    #module load pegasus
+    # dev version of Pegasus to enable data integrity
+    export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel6/4.9.0dev/bin:$PATH
 
     export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
     COMPUTE_SITE="osg-condorpool"
