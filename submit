@@ -11,14 +11,20 @@ irods_get() {
 }
 
 # are we on OSG Connect?
-if [ -e /stash2 ]; then
+if [ -e /stash -o -e /stash2 ]; then
+
+    HNAME=`hostname -f`
+    if [ "x$HNAME" != "xlogin03.osgconnect.net" ]; then
+        echo "This workflow has to be submitted from login03.osgconnect.net"
+        exit 1
+    fi
 
     # needed for stashcp to be picked up the site catalog for the local site
-    module load stashcp
+    #module load stashcp
+    export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/stashcp/writeback:$PATH
     
     #module load pegasus
-    # dev version of Pegasus to enable data integrity
-    export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel6/4.9.0dev/bin:$PATH
+    export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel7/4.9.0dev/bin:$PATH
 
     export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
     COMPUTE_SITE="osg-condorpool"
@@ -66,7 +72,9 @@ export RUN_ID=kinc-`date +'%s'`
 
 #generate sites.xml using the variables in this submit script
 
-export irods_path=$(dirname $2)
+if [ "x$2" != "x" ]; then
+    export irods_path=$(dirname $2)
+fi
 envsubst < "sites.xml.template" > "sites.xml"
 
 # generate the dax
