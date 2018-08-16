@@ -8,7 +8,6 @@
         <directory type="local-storage" path="$RUN_DIR/$RUN_ID/outputs">
             <file-server operation="all" url="file://$RUN_DIR/$RUN_ID/outputs"/>
         </directory>
-        <profile namespace="pegasus" key="SSH_PRIVATE_KEY" >/home/${USER}/.ssh/workflow</profile>
         <profile namespace="env" key="PATH" >${PATH}</profile>
         <profile namespace="condor" key="+WantsStashCache" >True</profile>
     </site>
@@ -32,8 +31,8 @@
     <site  handle="osg-condorpool" arch="x86_64" os="LINUX">
         <profile namespace="pegasus" key="style" >condor</profile>
         <profile namespace="condor" key="universe" >vanilla</profile>
-        <profile namespace="condor" key="requirements" >OSGVO_OS_STRING == "RHEL 6" &amp;&amp; HAS_MODULES == True &amp;&amp; STASHCP_VERIFIED == True &amp;&amp; HAS_SCP == True &amp;&amp; HAS_FILE_usr_lib64_libgsl_so_0 == True &amp;&amp; GLIDEIN_ResourceName != "Hyak" &amp;&amp; GLIDEIN_ResourceName != "CIT_CMS_T2" &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName1 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName2 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName3 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName4 &amp;&amp; OSG_GLIDEIN_VERSION &gt;= 317</profile>
-        <profile namespace="condor" key="request_memory" >2 GB</profile>
+        <profile namespace="condor" key="requirements" >OSGVO_OS_STRING == "RHEL 7" &amp;&amp; HAS_MODULES == True &amp;&amp; STASHCP_VERIFIED == True &amp;&amp; GLIDEIN_ResourceName != "CIT_CMS_T2" &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName1 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName2 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName3 &amp;&amp; TARGET.GLIDEIN_ResourceName =!= MY.MachineAttrGLIDEIN_ResourceName4 &amp;&amp; OSG_GLIDEIN_VERSION &gt;= 317</profile>
+        <profile namespace="condor" key="request_memory" >20 GB</profile>
         <profile namespace="condor" key="request_disk" >5 GB</profile>
         <profile namespace="condor" key="+WantsStashCacheWritable" >True</profile>
         <!-- profile namespace="env" key="PATH" >/cvmfs/oasis.opensciencegrid.org/osg/projects/stashcp/writeback:/usr/local/bin:/usr/bin:/bin</profile -->
