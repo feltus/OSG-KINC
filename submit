@@ -21,9 +21,11 @@ if [ -e /stash -o -e /stash2 ]; then
 
     # needed for stashcp to be picked up the site catalog for the local site
     module load stashcache
-    #export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/stashcp/writeback:$PATH
     #module load pegasus
     export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel7/4.9.0dev/bin:$PATH
+
+    # make sure we also have access to the AMQP lib
+    export PYTHONPATH="$PYTHONPATH:/usr/lib/python2.7/site-packages"
 
     export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
     COMPUTE_SITE="osg-condorpool"
@@ -77,8 +79,7 @@ fi
 envsubst < "sites.xml.template" > "sites.xml"
 
 # generate the dax
-export PYTHONPATH=`pegasus-config --python`
-./tools/dax-generator $RUN_ID $RUN_DIR $JOB_COUNT
+PYTHONPATH=`pegasus-config --python` ./tools/dax-generator $RUN_ID $RUN_DIR $JOB_COUNT
 
 # plan and submit the  workflow.  Use irods as staging and output site if path is provided
 
