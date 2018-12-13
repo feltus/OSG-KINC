@@ -11,11 +11,21 @@ irods_get() {
 }
 
 # are we on OSG Connect?
-if [ -e /stash2 ]; then
+if [ -e /stash -o -e /stash2 ]; then
+
+    HNAME=`hostname -f`
+    if [ "x$HNAME" != "xlogin03.osgconnect.net" ]; then
+        echo "This workflow has to be submitted from login03.osgconnect.net"
+        exit 1
+    fi
 
     # needed for stashcp to be picked up the site catalog for the local site
-    module load stashcp
-    module load pegasus
+    module load stashcache
+    #module load pegasus
+    export PATH=/cvmfs/oasis.opensciencegrid.org/osg/projects/pegasus/rhel7/4.9.0dev/bin:$PATH
+
+    # make sure we also have access to the AMQP lib
+    export PYTHONPATH="$PYTHONPATH:/usr/lib/python2.7/site-packages"
 
     export RUN_DIR=/local-scratch/$USER/workflows/$RUN_ID
     COMPUTE_SITE="osg-condorpool"
@@ -63,12 +73,13 @@ export RUN_ID=kinc-`date +'%s'`
 
 #generate sites.xml using the variables in this submit script
 
-export irods_path=$(dirname $2)
+if [ "x$2" != "x" ]; then
+    export irods_path=$(dirname $2)
+fi
 envsubst < "sites.xml.template" > "sites.xml"
 
 # generate the dax
-export PYTHONPATH=`pegasus-config --python`
-./tools/dax-generator $RUN_ID $RUN_DIR $JOB_COUNT
+PYTHONPATH=`pegasus-config --python` ./tools/dax-generator $RUN_ID $RUN_DIR $JOB_COUNT
 
 # plan and submit the  workflow.  Use irods as staging and output site if path is provided
 

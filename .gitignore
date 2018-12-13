@@ -4,5 +4,6 @@ task-files/*.txt
 task-files/kinc
 staging
 workflows
+sites.xml
 
 

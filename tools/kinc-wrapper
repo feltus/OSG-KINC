@@ -8,14 +8,13 @@ colnum=$5
 rownum=$6
 
 echo "Loading modules ..."
-source /cvmfs/oasis.opensciencegrid.org/osg/sw/module-init.sh
-module load sqlite/3.8.11.1
-module load libgfortran
-module load lapack
-module load gcc/4.9.2
-module load mixmodlib
-module load gsl/1.16
+#module load gcc/6.4.0
+module load gsl
+module load mixmod
+module load openblas
 echo "Module loading done."
+
+export LD_LIBRARY_PATH=/cvmfs/connect.opensciencegrid.org/modules/packages/linux-rhel7-x86_64/gcc-4.8.5spack/gcc-6.4.0-k5eggrz3xdhuomx6vhowwfis4spkuhfy/lib64:$LD_LIBRARY_PATH
 
 tar -xzf $input_matrix_targz
 rm $input_matrix_targz
